@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Shooting Game in Virtual Reality</title>
+
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+
+  <script src="https://unpkg.com/aframe-event-set-component@4.2.1/dist/aframe-event-set-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+
+  <script src="./components/Bullet.js"></script>
+  <script src="./components/GameObjects.js"></script>
+  <script src="./components/PlayerMovements.js"></script>
+</head>
+
+<body>
+  <!--Scene-->
+  <a-scene id="scene" inspector-plugin-recast>
+    <!--Assets-->
+    <a-assets timeout="5000">
+      <a-asset-item id="gun" src="./models/sg553_assault_rifle/scene.gltf"></a-asset-item>
+      <a-asset-item id="fence" src="./models/barbed_wire_fence/scene.gltf"></a-asset-item>
+      <a-asset-item id="collider" src="./models/navmesh.gltf"></a-asset-item>
+
+      <audio id="footsteps" src="./sounds/footStep.mp3"></audio>
+      <audio id="shoot" src="./sounds/shoot.mp3"></audio>
+    </a-assets>
+
+    <!--Light-->
+    <a-entity light="type: ambient; color: yellow; intensity:0.5"></a-entity>
+
+    <!--Bullets-->
+    <a-entity bullets></a-entity>
+
+    <!--Sounds-->
+    <a-entity id="playerFootsteps" sound="src:#footsteps; poolSize: 5; volume: 10"></a-entity>
+    <a-entity id="gunshots" sound="src:#shoot; poolSize: 10"></a-entity>
+
+    <!--Player Movement-->
+    <!-- <a-entity></a-entity> -->
+
+    <!--Ground-->
+    <a-plane id="ground" repeat="5 5" position="0 -1 0" rotation="-90 0 0" height="200" width="200" color="#FBF2D4"
+      static-body visible="false">
+    </a-plane>
+
+    <!--Camera and Cursor-->
+    <a-entity id="camera-rig" movement-controls="constrainToNavMesh: true; speed: 0.2" position="0 1.6 0">
+      <a-entity id="camera" camera="fov:90" position="0 1.6 0" wasd-controls="acceleration: 100"
+      look-controls="pointerLockEnabled: true; mouseEnabled: false">
+
+      <a-entity position="1.7 -0.6 -1"
+        text="font: exo2bold; align: center; color: white; width: 2; value: Test Placeholder"></a-entity>
+
+      <a-entity id="weapon" gltf-model="#gun" position="0.25 -0.3 -0.6" scale="0.004 0.004 0.004" rotation="0 -3 0"
+        player-movement>
+      </a-entity>
+
+      <a-cursor></a-cursor>
+     </a-entity>
+    </a-entity>
+
+    <!--Environment-->
+    <a-entity id="environment" environment="preset:egypt; skyType: gradient; lighting:point;">
+    </a-entity>
+
+    <!--Fences-->
+    <a-entity id="fences" fence boxes></a-entity>
+
+    <a-entity id="navigation-mesh" gltf-model="#collider" visible="false" nav-mesh></a-entity>
+  </a-scene>
+</body>
+
+</html>
