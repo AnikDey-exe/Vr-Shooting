@@ -1,1 +1,1 @@
-This is a vr shooting game where you have to shoot the tanks. 
+This is a vr shooting game where you have to shoot the tanks. Download the zip and extract the files from the folder. Use a web hoster to host the website (I use 2.00 OK! web server for chrome extension).  
